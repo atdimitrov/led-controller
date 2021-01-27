@@ -1,6 +1,9 @@
 #include <Arduino.h>
 #include <WiFi.h>
+#include <AsyncWebSocket.h>
 #include "config.h"
+
+AsyncWebServer server(80);
 
 void connectToWiFi(WiFiConfig wifiConfig)
 {
@@ -23,6 +26,18 @@ void setup()
 
     WiFiConfig wifiConfig = readWifiConfig();
     connectToWiFi(wifiConfig);
+
+    server.on("/static-color", HTTP_POST, [](AsyncWebServerRequest *request){
+        request->send(200);
+        Serial.println("POST /static-color received.");
+    });
+
+    server.on("/none", HTTP_POST, [](AsyncWebServerRequest *request){
+        request->send(200);
+        Serial.println("POST /none received.");
+    });
+
+    server.begin();
 }
 
 void loop()
