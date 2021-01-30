@@ -2,13 +2,13 @@
 #include <WiFi.h>
 #include <AsyncJson.h>
 #include <AsyncWebSocket.h>
+#include <ArduinoJson.h>
 #include "config.h"
 #include "effects.h"
 
 AsyncWebServer server(80);
-
+LedPanel ledPanel(17, 10, 3);
 Effect* currentEffect;
-LedPanel ledPanel = LedPanel(17, 10, 3);
 
 void connectToWiFi(WiFiConfig wifiConfig)
 {
@@ -25,33 +25,35 @@ void connectToWiFi(WiFiConfig wifiConfig)
     Serial.println("Connected");
 }
 
+bool tryApplyEffect(const JsonVariant &json)
+{
+    switch (json["effect"].as<uint8_t>())
+    {
+        case 0:
+            currentEffect = new StaticColor(ledPanel, json["staticColor"]["hue"]);
+            return true;
+        
+        default:
+            return false;
+    }
+}
+
 void runWebServer()
 {
     AsyncCallbackJsonWebHandler* effectHandler = new AsyncCallbackJsonWebHandler("/effect", [](AsyncWebServerRequest *request, JsonVariant &json)
     {
-        switch (json["effect"].as<uint8_t>())
+        if (tryApplyEffect(json))
         {
-            case 0:
-                currentEffect = new StaticColor(ledPanel, json["hue"]);
-                break;
-            
-            default:
-                request->send(400);
-                return;
+            writeEffectConfig(json);
+            request->send(200);
         }
-
-        request->send(200);
+        else
+        {
+            request->send(400);
+        }
     });
 
     server.addHandler(effectHandler);
-
-    server.on("/none", HTTP_POST, [](AsyncWebServerRequest *request)
-    {
-        request->send(200);
-        delete currentEffect;
-        currentEffect = nullptr;
-    });
-
     server.begin();
 }
 
@@ -63,14 +65,17 @@ void setup()
     connectToWiFi(wifiConfig);
 
     runWebServer();
+
+    StaticJsonDocument<128> json = readEffectConfig();
+    if (!tryApplyEffect(json.as<JsonVariant>()))
+    {
+        Serial.println("Persisted effect config cannot be applied.");
+    }
 }
 
 void loop()
 {
-    if (currentEffect != nullptr)
-    {
-        currentEffect->run();
-    }
+    currentEffect->run();
 
     FastLED.show();
 

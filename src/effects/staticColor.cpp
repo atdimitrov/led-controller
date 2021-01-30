@@ -1,4 +1,3 @@
-#include <Arduino.h>
 #include "effects.h"
 
 StaticColor::StaticColor(LedPanel &ledPanel, const uint8_t hue)
