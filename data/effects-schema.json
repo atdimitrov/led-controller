@@ -5,29 +5,31 @@
         "effect": {
             "type": "number",
             "minimum": 0,
-            "maximum": 0
+            "maximum": 1
         },
         "staticColor": {
             "type": "object",
             "properties": {
-                "hue": {
+                "r": {
                     "type": "number",
                     "minimum": 0,
                     "maximum": 255
                 },
-                "sat": {
+                "g": {
                     "type": "number",
                     "minimum": 0,
                     "maximum": 255
                 },
-                "val": {
+                "b": {
                     "type": "number",
                     "minimum": 0,
                     "maximum": 255
                 }
             },
             "required": [
-                "hue"
+                "r",
+                "g",
+                "b"
             ]
         }
     },

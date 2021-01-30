@@ -16,11 +16,11 @@ class Effect
 class StaticColor : public Effect
 {
     public:
-        StaticColor(LedPanel &ledPanel, uint8_t hue);
+        StaticColor(LedPanel &ledPanel, const CRGB color);
         ~StaticColor() override;
         void run() override;
     private:
-        const uint8_t hue;
+        const CRGB color;
 };
 
 #endif

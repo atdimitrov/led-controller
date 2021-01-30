@@ -1,7 +1,9 @@
 {
     "$schema": "./effects-schema.json",
-    "effect": 0,
+    "effect": 1,
     "staticColor": {
-        "hue": 0
+        "r": 255,
+        "g": 0,
+        "b": 0
     }
 }

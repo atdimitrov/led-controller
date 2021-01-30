@@ -7,8 +7,7 @@ struct LedSection
 {
     public:
         LedSection(uint8_t numberOfPixels, CRGB* pixels);
-        void setColor(uint8_t hue);
-        void setColor(CHSV hsv);
+        void setColor(CRGB color);
     private:
         const uint8_t numberOfPixels;
         CRGB* pixels;

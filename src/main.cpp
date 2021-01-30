@@ -27,15 +27,29 @@ void connectToWiFi(WiFiConfig wifiConfig)
 
 bool tryApplyEffect(const JsonVariant &json)
 {
+    StaticColor *newEffect;
     switch (json["effect"].as<uint8_t>())
     {
         case 0:
-            currentEffect = new StaticColor(ledPanel, json["staticColor"]["hue"]);
-            return true;
-        
+        {
+            newEffect = new StaticColor(ledPanel, CRGB::Black);
+            break;
+        }
+        case 1:
+        {
+            uint8_t r = json["staticColor"]["r"];
+            uint8_t g = json["staticColor"]["g"];
+            uint8_t b = json["staticColor"]["b"];
+            newEffect = new StaticColor(ledPanel, CRGB(r, g, b));
+            break;
+        }
         default:
             return false;
     }
+    
+    delete currentEffect;
+    currentEffect = newEffect;
+    return true;
 }
 
 void runWebServer()
