@@ -25,9 +25,18 @@ void connectToWiFi(WiFiConfig wifiConfig)
     Serial.println("Connected");
 }
 
+CRGB ReadColorFromJson(const JsonVariant& json)
+{
+    uint8_t r = json["r"];
+    uint8_t g = json["g"];
+    uint8_t b = json["b"];
+
+    return CRGB(r, g, b);
+}
+
 bool tryApplyEffect(const JsonVariant &json)
 {
-    StaticColor *newEffect;
+    Effect *newEffect;
     switch (json["effect"].as<uint8_t>())
     {
         case 0:
@@ -37,10 +46,14 @@ bool tryApplyEffect(const JsonVariant &json)
         }
         case 1:
         {
-            uint8_t r = json["staticColor"]["r"];
-            uint8_t g = json["staticColor"]["g"];
-            uint8_t b = json["staticColor"]["b"];
-            newEffect = new StaticColor(ledPanel, CRGB(r, g, b));
+            newEffect = new StaticColor(ledPanel, ReadColorFromJson(json["staticColor"]));
+            break;
+        }
+        case 2:
+        {
+            CRGB startColor = ReadColorFromJson(json["gradient"]["start"]);
+            CRGB endColor = ReadColorFromJson(json["gradient"]["end"]);
+            newEffect = new Gradient(ledPanel, startColor, endColor);
             break;
         }
         default:

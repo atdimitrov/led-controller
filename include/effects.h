@@ -23,4 +23,15 @@ class StaticColor : public Effect
         const CRGB color;
 };
 
+class Gradient : public Effect
+{
+    public:
+        Gradient(LedPanel &ledPanel, const CRGB startColor, const CRGB endColor);
+        ~Gradient() override;
+        void run() override;
+    private:
+        const CRGBPalette16 palette;
+        const int step;
+};
+
 #endif

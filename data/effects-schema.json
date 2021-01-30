@@ -5,7 +5,7 @@
         "effect": {
             "type": "number",
             "minimum": 0,
-            "maximum": 1
+            "maximum": 2
         },
         "staticColor": {
             "type": "object",
@@ -30,6 +30,65 @@
                 "r",
                 "g",
                 "b"
+            ]
+        },
+        "gradient": {
+            "type": "object",
+            "properties": {
+                "start": {
+                    "type": "object",
+                    "properties": {
+                        "r": {
+                            "type": "number",
+                            "minimum": 0,
+                            "maximum": 255
+                        },
+                        "g": {
+                            "type": "number",
+                            "minimum": 0,
+                            "maximum": 255
+                        },
+                        "b": {
+                            "type": "number",
+                            "minimum": 0,
+                            "maximum": 255
+                        }
+                    },
+                    "required": [
+                        "r",
+                        "g",
+                        "b"
+                    ]
+                },
+                "end": {
+                    "type": "object",
+                    "properties": {
+                        "r": {
+                            "type": "number",
+                            "minimum": 0,
+                            "maximum": 255
+                        },
+                        "g": {
+                            "type": "number",
+                            "minimum": 0,
+                            "maximum": 255
+                        },
+                        "b": {
+                            "type": "number",
+                            "minimum": 0,
+                            "maximum": 255
+                        }
+                    },
+                    "required": [
+                        "r",
+                        "g",
+                        "b"
+                    ]
+                }
+            },
+            "required": [
+                "start",
+                "end"
             ]
         }
     },
