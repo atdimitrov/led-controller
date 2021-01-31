@@ -2,15 +2,18 @@
 #include "led-panel.h"
 #include "effects.h"
 
-StaticGradient::StaticGradient(LedPanel &ledPanel, const CRGB startColor, const CRGB endColor)
+StaticGradient::StaticGradient(LedPanel &ledPanel, const CHSV startColor, const CHSV endColor, const bool reverse)
     : Effect(ledPanel)
 {
-    CRGB gradient[ledPanel.numberOfSections];
-    fill_gradient_RGB(gradient, ledPanel.numberOfSections, startColor, endColor);
+    CHSV gradient[ledPanel.numberOfSections];
+    fill_gradient(gradient, ledPanel.numberOfSections, startColor, endColor, SHORTEST_HUES);
 
     for (uint8_t i = 0; i < ledPanel.numberOfSections; i++)
     {
-        ledPanel.sections[i]->setColor(gradient[i]);
+        uint8_t sectionIndex = i;
+        if (reverse) sectionIndex = ledPanel.numberOfSections - i - 1;
+
+        ledPanel.sections[sectionIndex]->setColor(gradient[i]);
     }
 }
 

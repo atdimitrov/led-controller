@@ -17,17 +17,15 @@ class Effect
 class StaticColor : public Effect
 {
     public:
-        StaticColor(LedPanel &ledPanel, const CRGB color);
+        StaticColor(LedPanel &ledPanel, const CHSV color);
         ~StaticColor() override;
         void run() override;
-    private:
-        const CRGB color;
 };
 
 class StaticGradient : public Effect
 {
     public:
-        StaticGradient(LedPanel &ledPanel, const CRGB startColor, const CRGB endColor);
+        StaticGradient(LedPanel &ledPanel, const CHSV startColor, const CHSV endColor, const bool reverse);
         ~StaticGradient() override;
         void run() override;
 };
@@ -35,12 +33,13 @@ class StaticGradient : public Effect
 class RunningGradient : public Effect
 {
     public:
-        RunningGradient(LedPanel &ledPanel, const CRGB startColor, const CRGB endColor, const uint8_t speed, const uint8_t spreadFactor);
+        RunningGradient(LedPanel &ledPanel, const CHSV startColor, const CHSV endColor, const uint8_t speed, const uint8_t spreadFactor, const bool reverse);
         ~RunningGradient() override;
         void run() override;
     private:
-        CRGB *gradient;
+        CHSV *gradient;
         const uint8_t speed;
+        const bool reverse;
         ValueBouncer valueBouncer;
 };
 
