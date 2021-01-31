@@ -21,6 +21,7 @@ LedPanel::LedPanel(uint8_t pin, uint8_t numberOfSections, uint numberOfPixelsPer
       numberOfPixels(numberOfSections * numberOfPixelsPerSection),
       pixels(new CRGB[numberOfPixels])
 {
+    fill_solid(pixels, numberOfPixels, CHSV(0, 0, 0));
     AddLeds(pin, pixels, numberOfPixels);
 
     sections = (LedSection **)malloc(sizeof(LedSection *) * numberOfSections);
