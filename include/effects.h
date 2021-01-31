@@ -25,7 +25,7 @@ class StaticColor : public Effect
 class StaticGradient : public Effect
 {
     public:
-        StaticGradient(LedPanel &ledPanel, const CHSV startColor, const CHSV endColor, const bool reverse);
+        StaticGradient(LedPanel &ledPanel, const CHSV startColor, const CHSV endColor, const bool reverse, const TGradientDirectionCode direction);
         ~StaticGradient() override;
         void run() override;
 };
@@ -33,7 +33,7 @@ class StaticGradient : public Effect
 class RunningGradient : public Effect
 {
     public:
-        RunningGradient(LedPanel &ledPanel, const CHSV startColor, const CHSV endColor, const uint8_t speed, const uint8_t spreadFactor, const bool reverse);
+        RunningGradient(LedPanel &ledPanel, const CHSV startColor, const CHSV endColor, const uint8_t speed, const uint8_t spreadFactor, const bool reverse, const TGradientDirectionCode direction);
         ~RunningGradient() override;
         void run() override;
     private:

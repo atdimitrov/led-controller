@@ -54,7 +54,8 @@ bool tryApplyEffect(const JsonVariant &json)
             CHSV startColor = ReadColorFromJson(json["staticGradient"]["start"]);
             CHSV endColor = ReadColorFromJson(json["staticGradient"]["end"]);
             bool reverse = json["staticGradient"]["reverse"];
-            newEffect = new StaticGradient(ledPanel, startColor, endColor, reverse);
+            TGradientDirectionCode direction = json["staticGradient"]["direction"];
+            newEffect = new StaticGradient(ledPanel, startColor, endColor, reverse, direction);
             break;
         }
         case 3:
@@ -64,7 +65,8 @@ bool tryApplyEffect(const JsonVariant &json)
             uint8_t speed = json["runningGradient"]["speed"];
             uint8_t spreadFactor = json["runningGradient"]["spreadFactor"];
             bool reverse = json["runningGradient"]["reverse"];
-            newEffect = new RunningGradient(ledPanel, startColor, endColor, speed, spreadFactor, reverse);
+            TGradientDirectionCode direction = json["runningGradient"]["direction"];
+            newEffect = new RunningGradient(ledPanel, startColor, endColor, speed, spreadFactor, reverse, direction);
             break;
         }
         default:

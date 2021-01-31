@@ -2,14 +2,14 @@
 #include "led-panel.h"
 #include "effects.h"
 
-RunningGradient::RunningGradient(LedPanel &ledPanel, const CHSV startColor, const CHSV endColor, const uint8_t speed, const uint8_t spreadFactor, const bool reverse)
+RunningGradient::RunningGradient(LedPanel &ledPanel, const CHSV startColor, const CHSV endColor, const uint8_t speed, const uint8_t spreadFactor, const bool reverse, const TGradientDirectionCode direction)
     : Effect(ledPanel),
       gradient(new CHSV[ledPanel.numberOfSections * spreadFactor]),
       speed(speed),
       reverse(reverse),
       valueBouncer(ValueBouncer(0, (ledPanel.numberOfSections * spreadFactor) - 1))
 {
-    fill_gradient(gradient, ledPanel.numberOfSections * spreadFactor, startColor, endColor, SHORTEST_HUES);
+    fill_gradient(gradient, ledPanel.numberOfSections * spreadFactor, startColor, endColor, direction);
 }
 
 RunningGradient::~RunningGradient()
