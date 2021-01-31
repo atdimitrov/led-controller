@@ -69,6 +69,14 @@ bool tryApplyEffect(const JsonVariant &json)
             newEffect = new RunningGradient(ledPanel, startColor, endColor, speed, spreadFactor, reverse, direction);
             break;
         }
+        case 4:
+        {
+            CHSV primaryColor = ReadColorFromJson(json["starlight"]["primaryColor"]);
+            CHSV secondaryColor = ReadColorFromJson(json["starlight"]["secondaryColor"]);
+            uint8_t speed = json["starlight"]["speed"];
+            newEffect = new Starlight(ledPanel, primaryColor, secondaryColor, speed);
+            break;
+        }
         default:
             return false;
     }

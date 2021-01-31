@@ -43,4 +43,31 @@ class RunningGradient : public Effect
         ValueBouncer valueBouncer;
 };
 
+class Starlight : public Effect
+{
+    public:
+        Starlight(LedPanel &ledPanel, const CHSV primaryColor, const CHSV secondaryColor, const uint8_t speed);
+        ~Starlight() override;
+        void run() override;
+    private:
+        CHSV *gradient;
+        const uint8_t speed;
+        class StarlightSection
+        {
+            public:
+                StarlightSection(LedSection *section, CHSV *gradient);
+                bool IsActive();
+                void Activate();
+                void Tick();
+            private:
+                LedSection *section;
+                CHSV *gradient;
+                bool isActive;
+                ValueBouncer valueBouncer;
+                uint8_t cyclesPerChange;
+                uint8_t currentCycles;
+        };
+        StarlightSection** sections;
+};
+
 #endif
