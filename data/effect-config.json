@@ -1,5 +1,4 @@
 {
-    "$schema": "./effects-schema.json",
     "effect": 1,
     "staticColor": {
         "r": 255,

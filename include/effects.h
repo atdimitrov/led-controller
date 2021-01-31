@@ -2,6 +2,7 @@
 #define EFFECTS_H
 
 #include "led-panel.h"
+#include "valueBouncer.h"
 
 class Effect
 {
@@ -23,15 +24,24 @@ class StaticColor : public Effect
         const CRGB color;
 };
 
-class Gradient : public Effect
+class StaticGradient : public Effect
 {
     public:
-        Gradient(LedPanel &ledPanel, const CRGB startColor, const CRGB endColor);
-        ~Gradient() override;
+        StaticGradient(LedPanel &ledPanel, const CRGB startColor, const CRGB endColor);
+        ~StaticGradient() override;
+        void run() override;
+};
+
+class RunningGradient : public Effect
+{
+    public:
+        RunningGradient(LedPanel &ledPanel, const CRGB startColor, const CRGB endColor, const uint8_t speed, const uint8_t spreadFactor);
+        ~RunningGradient() override;
         void run() override;
     private:
-        const CRGBPalette16 palette;
-        const int step;
+        CRGB *gradient;
+        const uint8_t speed;
+        ValueBouncer valueBouncer;
 };
 
 #endif

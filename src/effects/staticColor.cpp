@@ -1,3 +1,5 @@
+#include <FastLED.h>
+#include "led-panel.h"
 #include "effects.h"
 
 StaticColor::StaticColor(LedPanel &ledPanel, const CRGB color)

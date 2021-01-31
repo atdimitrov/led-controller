@@ -51,9 +51,18 @@ bool tryApplyEffect(const JsonVariant &json)
         }
         case 2:
         {
-            CRGB startColor = ReadColorFromJson(json["gradient"]["start"]);
-            CRGB endColor = ReadColorFromJson(json["gradient"]["end"]);
-            newEffect = new Gradient(ledPanel, startColor, endColor);
+            CRGB startColor = ReadColorFromJson(json["staticGradient"]["start"]);
+            CRGB endColor = ReadColorFromJson(json["staticGradient"]["end"]);
+            newEffect = new StaticGradient(ledPanel, startColor, endColor);
+            break;
+        }
+        case 3:
+        {
+            CRGB startColor = ReadColorFromJson(json["runningGradient"]["start"]);
+            CRGB endColor = ReadColorFromJson(json["runningGradient"]["end"]);
+            uint8_t speed = json["runningGradient"]["speed"];
+            uint8_t spreadFactor = json["runningGradient"]["spreadFactor"];
+            newEffect = new RunningGradient(ledPanel, startColor, endColor, speed, spreadFactor);
             break;
         }
         default:
@@ -93,7 +102,7 @@ void setup()
 
     runWebServer();
 
-    StaticJsonDocument<128> json = readEffectConfig();
+    StaticJsonDocument<256> json = readEffectConfig();
     if (!tryApplyEffect(json.as<JsonVariant>()))
     {
         Serial.println("Persisted effect config cannot be applied.");
@@ -105,6 +114,4 @@ void loop()
     currentEffect->run();
 
     FastLED.show();
-
-    delay(1000);
 }

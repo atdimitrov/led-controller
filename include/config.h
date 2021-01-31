@@ -12,8 +12,8 @@ struct WiFiConfig
 
 WiFiConfig readWifiConfig();
 
-StaticJsonDocument<128> readEffectConfig();
+StaticJsonDocument<256> readEffectConfig();
 
-void writeEffectConfig(StaticJsonDocument<128> jsonDoc);
+void writeEffectConfig(StaticJsonDocument<256> jsonDoc);
 
 #endif

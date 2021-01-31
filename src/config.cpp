@@ -22,12 +22,12 @@ WiFiConfig readWifiConfig()
     return config;
 }
 
-StaticJsonDocument<128> readEffectConfig()
+StaticJsonDocument<256> readEffectConfig()
 {
     SPIFFS.begin();
     File configFile = SPIFFS.open("/effect-config.json", FILE_READ);
     
-    DynamicJsonDocument jsonDoc(128);
+    StaticJsonDocument<256> jsonDoc;
     deserializeJson(jsonDoc, configFile);
 
     configFile.close();
@@ -35,7 +35,7 @@ StaticJsonDocument<128> readEffectConfig()
     return jsonDoc;
 }
 
-void writeEffectConfig(StaticJsonDocument<128> jsonDoc)
+void writeEffectConfig(StaticJsonDocument<256> jsonDoc)
 {
     SPIFFS.begin();
     File configFile = SPIFFS.open("/effect-config.json", FILE_WRITE);
