@@ -14,7 +14,7 @@ struct LedPanel
         LedSection** sections;
     private:
         const uint8_t numberOfPixelsPerSection;
-        const uint8_t numberOfPixels;
+        const uint16_t numberOfPixels;
         CRGB* pixels;
 };
 

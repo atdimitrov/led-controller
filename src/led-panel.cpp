@@ -3,12 +3,21 @@
 #include "led-panel.h"
 #include "led-section.h"
 
-void AddLeds(uint8_t pin, CRGB *leds, uint8_t numberOfLeds)
+void AddLeds(uint8_t pin, CRGB *leds, uint16_t numberOfLeds)
 {
     switch (pin)
     {
         case 17:
             FastLED.addLeds<NEOPIXEL, 17>(leds, numberOfLeds);
+            break;
+        case 19:
+            FastLED.addLeds<NEOPIXEL, 19>(leds, numberOfLeds);
+            break;
+        case 32:
+            FastLED.addLeds<NEOPIXEL, 32>(leds, numberOfLeds);
+            break;
+        case 27:
+            FastLED.addLeds<NEOPIXEL, 27>(leds, numberOfLeds);
             break;
         default:
             throw "AddLeds() does not support the provided pin.";

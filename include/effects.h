@@ -70,4 +70,16 @@ class Starlight : public Effect
         StarlightSection** sections;
 };
 
+class PaletteRandomness : public Effect
+{
+    public:
+        PaletteRandomness(LedPanel &ledPanel, const CHSV color1, const CHSV color2, const CHSV color3, const CHSV color4, const uint8_t speed);
+        ~PaletteRandomness() override;
+        void run() override;
+    private:
+        const CHSVPalette16 palette;
+        const uint8_t speed;
+        uint8_t *paletteIndices;
+};
+
 #endif
